@@ -1,0 +1,33 @@
+.header-wrapper {
+  border-bottom: 3px solid orange;
+}
+
+.header {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  padding: 4px 16px;
+  background-color: white;
+}
+
+.cart-details {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.badge {
+  padding: 0 4px;
+  color: black;
+  background-color: white;
+  margin-right: 8px;
+}
+
+.cart-price {
+  margin-left: 5px;
+}
+
+.cart-link {
+  color: black;
+  text-decoration: none;
+}
