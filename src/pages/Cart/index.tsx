@@ -4,6 +4,8 @@ import { CartState } from '../../store'
 import { useHistory, Redirect } from 'react-router-dom'
 import Header from '../../components/Header'
 import './style.css'
+import toast, { Toaster } from 'react-hot-toast';
+
 
 const Cart = () => {
   const token = localStorage.getItem('token');
@@ -52,11 +54,12 @@ const Cart = () => {
         })
       }
       <div className='cart-buttons'>
+        <Toaster />
         <button onClick={() => history.goBack()}>Continuar comprando</button>
         <button onClick={
           () => {
             dispatch({ type: 'CLEAR_CART' })
-            alert('Seu pedido foi finalizado!')
+            toast.success('Seu pedido foi finalizado!')
             history.push('/home')
           }
           }>Finalizar compra</button>

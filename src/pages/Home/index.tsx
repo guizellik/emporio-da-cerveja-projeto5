@@ -6,26 +6,38 @@ import ProductItem from '../../components/ProductItem'
 import Header from '../../components/Header'
 import './style.css'
 import copo from '../../images/copo-cerveja.png'
+import toast, { Toaster } from 'react-hot-toast';
+
 
 const Home = () => {
   const token = localStorage.getItem('token');
 
   const [product, setProduct] = useState([])
 
+
+
   useEffect(() => {
-    if(token) {
-      const headers = {
-        'Authorization': `Bearer ${token}`
+    const getProducts = async () => {
+      try {
+        if(token) {
+          const headers = {
+            'Authorization': `Bearer ${token}`
+          }
+          const response = await axios.get('http://localhost:4000/beers', { headers: headers })
+          setProduct(response.data)
+        }
+      } catch (erro) {
+        toast.error(`Erro ao buscar a lista de produtos: ${erro}`);
       }
-      axios.get('http://localhost:4000/beers', { headers: headers })
-        .then(resposta => setProduct(resposta.data))
     }
+    getProducts()
   },[token]);
 
   return (
     token ?
     <div className='homepage'>
       <Header showCategory />
+      <Toaster />
       <div className='feat-content'>
         <img src={copo} alt='copo' />
         <h4>Destaques no Empório</h4>

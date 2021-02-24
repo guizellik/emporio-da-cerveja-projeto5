@@ -4,6 +4,7 @@ import Badge from '@material-ui/core/Badge';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
+import toast, { Toaster } from 'react-hot-toast';
 
 import logo from '../../images/emporio-logo.png'
 import { CartState } from '../../store'
@@ -19,14 +20,22 @@ const Header = (props: HeaderProps) => {
   const { showCategory } = props
   const [category, setCategory] = useState([])
 
+
   useEffect(() => {
-    if(token) {
-      const headers = {
-        'Authorization': `Bearer ${token}`
+    const getCategoryList = async () => {
+      try {
+        if(token) {
+          const headers = {
+          'Authorization': `Bearer ${token}`
+          }
+          const response = await axios.get('http://localhost:4000/categories', { headers: headers })
+          setCategory(response.data)
+        }
+      } catch (erro) {
+        toast.error(`Erro ao buscar a lista de produtos: ${erro}`);
       }
-      axios.get('http://localhost:4000/categories', { headers: headers })
-        .then(resposta => setCategory(resposta.data))
     }
+    getCategoryList()
   }, [token])
 
   const cartItemsAmount = useSelector((state: CartState) => state.cartProducts.length)
@@ -49,7 +58,7 @@ const Header = (props: HeaderProps) => {
               <ShoppingCartIcon />
             </Badge>
             <span className='cart-price'>
-              {cartItemsAmount > 0 ? `R$ ${cartTotal}` : 'Vazio :('}
+              {cartItemsAmount > 0 ? `R$ ${cartTotal.toFixed(2)}` : 'Vazio :('}
             </span>
           </div>
         </Link>
@@ -61,6 +70,7 @@ const Header = (props: HeaderProps) => {
           ))
         }
       </ul> : '' }
+      <Toaster />
     </div>
   )
 }
