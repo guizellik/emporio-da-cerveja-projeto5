@@ -6,7 +6,7 @@ import './style.css'
 
 
 interface ProductItemProps {
-  description: string,
+  description?: string,
   image: string,
   price: number,
   title: string,

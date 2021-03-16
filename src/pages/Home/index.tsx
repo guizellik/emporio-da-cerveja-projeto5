@@ -45,7 +45,7 @@ const Home = () => {
       <div className='beer-list'>
         {
           product?.map((item: Product) => (
-            <ProductItem image={item.image} description={item.description} title={item.title} price={item.price} />
+            <ProductItem image={item.image} title={item.title} price={item.price} />
           ))
         }
       </div>
